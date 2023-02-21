@@ -1,0 +1,348 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block body %}
+
+<style>
+	.page-body{
+		background-image:url("{% static 'authentication\img\repeat.jpg' %}");
+	}
+</style>
+
+<link rel="stylesheet" href="{% static 'authentication\css\student.css' %}?{% now "U" %}">
+<script src="{% static 'authentication\js\student.js' %}?{% now "U" %}"></script>
+
+{% comment %} -----  main-nav-bar   ------------------------------------------    {% endcomment %}
+<nav class="navigation-bar">
+	<ul>
+        <li>
+            <span style="cursor:pointer" onclick="openNav()">&#9776;</span>
+        </li>
+    </ul>
+	<ul>
+		<li><a href="{% url 'home' %}">Home</a></li>
+	</ul>
+</nav>
+{% comment %} -----  main-nav-bar  end ------------------------------------------    {% endcomment %}
+
+{% comment %} student-page-body------------------------------------------------------ {% endcomment %}
+	<div class="page-body">
+
+		<div class="side-nav" id="sidenav">
+
+			{% if page == 'view-student-details' %}
+				<a  href="javascript:void(0);" class='side-nav-link selected' >
+					<img class="rounded-circle" src="{% static '/img/view-profile-logo.png' %}" alt="">
+					<p> My Profile</p>
+				</a>
+			{% else %}
+				<a href="{% url 'view-stud-details' %}" class='side-nav-link' >
+					<img class="rounded-circle" src="{% static '/img/view-profile-logo.png' %}" alt="">
+					<p>My Profile</p>
+				</a>
+			{% endif %}
+			
+			{% if page == 'update-details'  %}
+				<a href="javascript:void(0);" class='side-nav-link selected' >
+					<img class="rounded-circle"  src="{% static '/img/edit-profile-logo2.png' %}" alt="">
+					<p>Edit Profile</p>
+				</a>
+			{% else %}
+				<a href="{% url 'add-stud-details' %}" class='side-nav-link' >
+					<img class="rounded-circle"  src="{% static '/img/edit-profile-logo2.png' %}" alt="">
+					<p>Edit Profile</p>
+				</a>
+			{% endif %}
+			
+			{% if page == 'change-username' %}
+				<a href="javascript:void(0);" class='side-nav-link selected' >
+					<img class="rounded-circle" src="{% static '/img/reset-pass-icon.jpg' %}" alt="">
+					<p>Change Username</p>
+				</a>
+			{% else %}
+				<a href="{% url 'uname-update' %}" class='side-nav-link' >
+					<img class="rounded-circle" src="{% static '/img/reset-pass-icon.jpg' %}" alt="">
+					<p>Change Username</p>
+				</a>
+			{% endif %}
+
+			{% if page == 'change-password' %}
+				<a href="javascript:void(0);" class='side-nav-link selected' >
+					<img class="rounded-circle" src="{% static '/img/reset-pass-icon.jpg' %}" alt="">
+					<p>Change Password</p>
+				</a>
+			{% else %}
+				<a href="{% url 'passw-update' %}" class='side-nav-link' >
+					<img class="rounded-circle" src="{% static '/img/reset-pass-icon.jpg' %}" alt="">
+					<p>Change Password</p>
+				</a>
+			{% endif %}
+
+			<a href="{% url 'logout' %}" class='side-nav-link' >
+				<img class="rounded-circle" src="{% static '/img/log-out-logo2.jpg' %}" alt="">
+				<p>Logout</p>
+			</a>
+			<hr>
+		</div>
+		
+		{% comment %} update student-details ------------------------------------------ {% endcomment %}
+
+		{% if page == 'update-details'  %}
+			<div class="add-student-details">
+				<h3>Update Details</h3>
+				<form action="" method="post">
+					{% csrf_token %}
+					<div class="full-name">
+						<div class="first-name">
+							<label>FirstName </label> <br>
+							<input type="text" name='firstname'  value='{{firstname}}' required>
+						</div>
+						<div class="last-name">
+							<label>LastName </label> <br>
+							<input type="text" name='lastname'  value='{{lastname}}' required>
+						</div>
+					</div>
+					<div class="full-name">
+						<div class="first-name">
+							<label>Age</label><br>
+							<input type="text" name="age" value="{% if details.age %}{{details.age}}{% endif %}">
+						</div>
+						<div class="last-name">
+							<label>Phone</label><br>
+							<input type="text" name="phone" id="" value="{% if details.phone %}{{details.phone}}{% endif %}">
+						</div>
+					</div>
+					<div class="full-name">
+						<div class="first-name">
+							<label>Admission_No</label><br>
+							<input type="text" name="admission_no" id="" value="{{details.admission_no}}">
+						</div>
+						<div class="last-name">
+							<label>Batch</label>
+							<input type="text" name="batch" id="" value="{% if details.batch %}{{details.batch}}{% endif %}">
+						</div>
+					</div>
+					<label>Address</label><br>
+					<input type="text" name="address" id="" value="{% if details.address %}{{details.address}}{% endif %}"><br>
+					
+					<label for="branch">Branch</label><br>
+					<select name="branch" id="branch" value="{{details.branch}}">
+						<option value="{{details.branch}}"> {{details.get_branch_display}} </option>
+						<option value="CHE">Computer Hardware Engineering</option>
+						<option value="EC">Electronics And Communication</option>
+						<option value="ME">Mechanical Engineering</option>
+						<option value="IE">Instrumentaion Engineering</option>
+						<option value="CE">Computer Engineering</option>
+					</select>
+					<br>
+					
+					<button type="submit">submit</button>
+				</form>
+			</div>
+		{% endif %}
+		{% comment %} update student-details   end------------------------------------ {% endcomment %}
+
+		
+		{% comment %} view-studetn-details--------------------------------------------- {% endcomment %}
+
+		{% if page == 'view-student-details' %}
+		<div class="view-area">
+			<div class="profile-wrap">
+				<div class="heading"><h4>My Profile</h4></div>
+
+				<div class="profile-info">
+					<table class = "profile-table">
+						<tr>
+							<td></td>
+							<td>Name</td>
+							<td>{{firstname}} {{lastname}}</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>Username</td>
+							<td>{{ stud.name.username }}</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>Age</td>
+							<td>{{stud.age}}</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>Phone_no</td>
+							<td>{{stud.phone}}</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>Batch</td>
+							<td>{{stud.batch}}</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>Branch</td>
+							<td>{{branch}}</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>Address</td>
+							<td>{{stud.address}}</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>Admission_No</td>
+							<td>{{stud.admission_no}}</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div class="requested-books">
+				<h6 class="requested-books-heading">View Requested Books <span id="open" onclick="showTable()">&vee;</span><span id="close" onclick="closeTable()">&#10540;</span></h6>
+				<table id="requested-books-table">
+					{% for book in requested_books  %}
+					<tr>
+						<td></td>
+						<td><span class="book-image-name-wrap"><img class=""  src="{{book.Book.image.url}}" alt=""> {{book.Book}}</span></td>
+						{% if book.issued %}
+							<td>issued</td>
+						{% else %}
+							<td>Request Pending</td>
+						{% endif %}
+						<td><a href="{% url 'view-stud-details' book.Book.id %}">Cancel</a></td>
+					</tr>
+					{% endfor %}
+				</table>
+			</div>
+			<div class="issued-books">
+				<h6 class="view-books-heading">View Borrowed Books <span id="open-issued-book" onclick="showViewTable()">&vee;</span><span id="close-issued-book" onclick="closeViewTable()">&#10540;</span></h6>
+				<table id="issued-book-table" class="ml-4">
+					<tr>
+
+						<th class="h5 pb-3 font-weight-bold">Book</th>
+						<th class="h5 pb-3 font-weight-bold">Return</th>
+					</tr>
+					{% for book in borrowed_books  %}
+					<tr>
+						
+						<td><span class="book-image-name-wrap"><img class=""  src="{{book.Book.image.url}}" alt=""> {{book.Book}}</span></td>
+
+						{% if book.return_request %}
+							<td><a class="text-danger" href="{% url 'return-book' book.id %}">Cancel</a></td>
+						{% else %}
+							<td><a class="text-success" href="{% url 'return-book' book.id %}">Request</a></td>	
+						{% endif %}
+						
+					</tr>
+					{% endfor %}
+				</table>
+			</div>
+		</div>
+		{% endif %}
+
+		{% comment %} view-studetn-details end ----------------------------------------- {% endcomment %}
+
+
+		{% comment %} update-username-password-------------------------------------- {% endcomment %}
+
+		{% if page == 'change-password' %}
+
+			<div class="view-area">
+				{% if msg %}
+					<div class="Change-password-msg" id = "Msg"><p id="msgp" style="background-color:{{bg_color}}">{{msg}} <span onclick="closePasswordMessage()">&times;</span></p> </div>
+				{% endif %}
+				<div class="validate-message" id="validateMessage">
+					<p id="msg2"></p>
+					<span onclick="closeValidateMsg()">&times;</span>
+				</div>
+				<div class="change-uname-passw-wrap" >
+					<h2>Change Your Password</h2>
+					<form action="" method="post" id = "changePasswordForm">
+						{% csrf_token %}
+						<div class="input-label-wrap">
+							<div class="label">
+								<label>Username</label>
+							</div>
+							<div class="input">
+								<input type="text" value="{{request.user}}" name="username" readonly>
+							</div>
+						</div>
+
+						<div class="input-label-wrap">
+							
+							<div class="label">
+								<label>Current Password</label>
+							</div>
+							<div class="input">
+								<input style="background-color:{{inp_bg}};border-color:{{border_color}};"  type="password" name="current_passw" id="curr_pass" value="{{current_passw}}" required>
+							</div>
+						</div>
+						<div class="input-label-wrap">
+							<div class="label">
+								<label >New Password</label>
+							</div>
+							<div class="input">
+								<input type="password" id="new_pass" required value="{{new_passw}}" >
+							</div>
+						</div>
+						<div class="input-label-wrap">
+							<div class="label">
+								<label>Confirm New Password</label>
+							</div>
+							<div class="input">
+								<input type="password" name="password" id="conf_new_pass" value="{{new_passw}}"  required>
+							</div>
+						</div>
+						<input  type="button" value="Update" onclick="validateChangePassoword()">
+					</form>
+
+				</div>
+			</div>
+
+		{% endif %}
+		{% if page == 'change-username' %}
+
+			<div class="view-area">
+				{% if msg %}
+					<div class="Change-password-msg" id = "Msg"><p id="msgp" style="background-color:{{bg_color}}">{{msg}} <span onclick="closePasswordMessage()">&times;</span></p> </div>
+				{% endif %}
+				<div class="change-uname-passw-wrap" >
+					<h2>Change Your Username</h2>
+					<form action="" method="post" >
+						{% csrf_token %}
+						<div class="input-label-wrap">
+							<div class="label">
+								<label>Username</label>
+							</div>
+							<div class="input">
+								<input type="text" name="old_uname" id="" value="{{request.user}}" readonly >
+							</div>
+						</div>
+						<div class="input-label-wrap">
+							<div class="label">
+								<label>New Username</label>
+							</div>
+							<div class="input">
+								<input type="text" name="username" id="" >
+							</div>
+						</div>
+						<div class="input-label-wrap">
+							<div class="label">
+								<label>Enter Your Password</label>
+							</div>
+							<div class="input">
+								<input type="password" name="password" id="conf_new_pass">
+							</div>
+						</div>
+						<button type="submit">Update</button>
+					</form>
+
+				</div>
+			</div>
+
+		{% endif %}
+		{% comment %} update-username-password-------------------------------------- {% endcomment %}
+
+	</div> {% comment %} page-body {% endcomment %}
+	
+{% comment %} student-page-body  end--------------------------------------------------- {% endcomment %}
+
+{% endblock body %}

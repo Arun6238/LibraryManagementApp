@@ -1,0 +1,356 @@
+
+.page-body{
+    height: fit-content;
+    padding-block: 2em;
+    min-height: 100%;
+    background-repeat: repeat;
+    background-size:150px 150px ;
+}
+
+/*----------------------------------------------------------------- nav-bar  */
+
+.navigation-bar{
+    display: flex;
+    position: fixed;
+    top:0;
+    left:0;
+    right: 0;
+    background:black;
+    color: white;
+    padding-top:25px ;
+    font-weight:bold;
+    font-size:1.2em;
+    padding-bottom: 10px;
+    z-index: 1;
+}
+
+.navigation-bar ul{
+    list-style-type: none ;
+}
+.navigation-bar a{
+    color:white;
+}
+.navigation-bar a:hover{
+    text-decoration: none;
+    color:rgb(255, 215, 215);
+}
+/*--------------------------------------- nav-bar-end  */
+
+/*-------------------------------- side-nav-bar-start  */
+
+.side-nav{
+    position: fixed;
+    top:5em;
+    width: 18vw;
+    border-top:1px solid white;
+    background-color: rgba(0, 0, 0, 0.8);
+    padding-top: 1em;
+    padding-inline:1.5vw ;
+    height: 100vh;
+    overflow-x: hidden;
+}
+.side-nav-link{
+    display: flex;
+    align-content: center;
+    margin-top: 1em;
+
+}
+
+.side-nav-link:hover{
+    text-decoration: none;
+    font-weight: bold;
+    color: rgb(102, 255, 255);
+}
+.selected{
+    text-decoration: none;
+    font-weight: bold;
+    color: rgb(102, 255, 255); 
+}
+
+.side-nav img{
+    width: 30px;
+    height: 30px;
+    border-radius:30%;
+    margin-right: 1em;
+    display: inline-block;
+}
+
+.side-nav-link:hover img,.selected img{
+    width: 31px;
+    height: 31px;
+}
+
+/*---------------------------------- side-nav-bar   end  */
+
+/*----------------------- update-student-details   start */
+.add-student-details{
+    margin-left:25vw;
+    margin-top: 5em;
+    margin-bottom: 2em;
+    width: 65vw;
+    padding-inline: 2.5vw;
+    padding-top:1.5em;
+    padding-bottom:2em ;
+
+    background-color: rgba(255, 255, 255, 0.6);
+    border-left:3vw crimson solid;
+
+    /* background: rgba(255, 208, 147, 0.82);
+    border-top:1px crimson solid;
+    border-right:2px crimson solid;
+    border-left:3vw crimson solid; */
+
+    
+}
+.add-student-details h3{
+    color:rgb(188, 7, 43);
+    margin-bottom: 20px;
+    text-transform:uppercase;
+    font-weight: bold;
+    word-spacing: .2em;
+}
+
+.full-name{
+    display: grid;
+    column-gap: 1em;
+    grid-template-columns: 1fr 1fr;
+}
+
+.add-student-details label{
+    color:rgb(179, 17, 49);
+    font-weight:bold;
+    margin-top: 2px;
+}
+.add-student-details input{
+    width: 100%;
+    padding-inline:.8em;
+    padding-top:.3em;
+    padding-bottom:.5em;
+    border-radius:6px ;
+    border: none;
+    border-bottom:2px crimson solid;
+}
+.add-student-details select{
+    width: 100%;
+    padding-inline:.8em;
+    padding-top:.3em;
+    padding-bottom:.5em;
+    background-color: white;
+    border: none;
+    border-bottom:2px crimson solid;
+    border-radius:6px ;
+
+}
+.add-student-details button{
+    background-color: rgb(188, 0, 38);
+    color: wheat;
+    font-weight: bold;
+    text-transform: capitalize;
+    padding-inline:1em;
+    padding-top:.3em;
+    padding-bottom:.5em;
+    margin-top: 2em;
+    border-radius:6px ;
+}
+
+/*----------------------------------------------------------------- update-student-details */
+.view-area{
+    margin-left:18vw;
+    margin-top:50px ;
+    width: inherit;
+    height: 100%;
+}
+
+
+
+/* view-stud-details --------------------------------------------------------------------- */
+
+.profile-wrap{
+    padding: 3px 3px;
+    background-color: rgba(255, 255, 255, 0.788);
+    margin-inline: auto;
+    margin-top:4em ;
+    width: 60vw;
+}
+
+.profile-wrap .heading{
+    color:white;
+    font-weight: bold;
+    margin-bottom: 1em;
+    background-color: rgb(23, 95, 95);
+    padding: .5em 1em .5em 1em;
+}
+
+
+.profile-table{
+    width: 100%;
+    border-bottom: rgb(23, 95, 95) 10px solid;
+    padding-bottom:2em;
+    font-weight: bold;
+    
+}
+
+.profile-table td{
+    padding-inline:1em;
+    padding-block:.5em ;
+}
+
+.profile-table tr:last-child td{
+    padding-bottom: 2em;
+}
+
+.requested-books, .issued-books{
+    background-color: rgba(255, 255, 255, 0.788);
+    margin-inline: auto;
+    margin-top:1em ;
+    width: 60vw;
+}
+.requested-books-heading ,.view-books-heading{
+    color:white;
+    font-weight: bold;
+    margin-bottom: 1em;
+    background-color: rgb(23, 95, 95);
+    padding: .8em 1em .8em 1em;
+}
+.requested-books-heading span,.view-books-heading span{
+    float: right;
+    cursor: pointer;
+}
+
+#close{
+    display:none;
+    font-size: inherit;
+}
+
+#close-issued-book{
+    display:none;
+}
+.requested-books table{
+
+    display: none;
+    width: 100%;
+    font-weight: bold;
+    z-index: 0;
+}
+.requested-books td{
+    padding-inline:1em;
+    padding-block:.5em ;
+}
+.book-image-name-wrap img{
+    height: 2.8em;
+    width: 1.8em;
+}
+#issued-book-table{
+    display: none;
+    width: 100%;
+    font-weight: bold;
+    z-index: 0;
+    border-bottom:1em solid transparent ;
+}
+
+
+/* --------------------------------------------------------------------- view-stud-details */
+
+/* update-username-password --------------------------------------------------------------------- */
+
+.validate-message{
+    position: fixed;
+    top:100px;
+    left:18vw;
+    right:0;
+    display: none;
+    justify-content: center;
+
+
+}
+.validate-message span{
+    padding-block: .7em .9em;
+    display: block;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    width: 2vw;
+    height: fit-content;
+    background-color: red;
+    cursor: pointer;
+    
+
+}
+
+#Msg{
+    position: fixed;
+    top:100px;
+    left:18vw;
+    right:0;
+    display: flex;
+    justify-content: center;
+}
+#msgp,#msg2{
+    padding-block: .7em .9em;
+    padding-inline:1em ;
+    background-color: red;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    width: 40vw;
+}
+.Change-password-msg span{
+    float: right;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+.change-uname-passw-wrap{
+    padding: 2.5em 3vw 2.4em 3vw;
+    background-color: rgba(21, 17, 17, 0.68);
+    width: 42vw;
+    margin-inline: auto;
+    margin-top: 20vh;
+    position: relative;
+    border-radius: 3px;
+    
+}
+
+.change-uname-passw-wrap h2{
+   color: yellow;
+   font-weight:600;
+   /* text-align: center; */
+   margin-bottom: 1em;
+}
+.input-label-wrap{
+
+    display: grid;
+    grid-template-columns: 1fr 2fr ;
+    column-gap: 1em;
+    margin-bottom: .8em;
+}
+.label label{
+    color: rgb(255, 229, 100);
+    font-weight: bold;
+}
+.input input{
+    width: 100%;
+    border: 0;
+    border-radius:2px ;
+    border-bottom: 3px yellow solid;
+    padding:.3em 1em .4em 1em;
+}
+.change-uname-passw-wrap input[type="button"],.change-uname-passw-wrap button{
+    color:rgb(0, 0, 0);
+    font-weight: bold;
+    font-size: 1.1em;
+    background:yellow;
+    padding:.3em 1em .4em 1em;
+    border: 0;
+    border-radius:2px;
+    min-width: 120px;
+    margin-top: .5em;
+
+}
+
+.change-uname-passw-wrap input[type="button"]:hover,.change-uname-passw-wrap button:hover{
+    background-color: rgb(255, 255, 103);
+    cursor:pointer;
+}
+
+/* ---------------------------------------------------------------    update-username-password */

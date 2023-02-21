@@ -1,0 +1,339 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block body %}
+<link rel="stylesheet" href="{% static 'home\css\admin.css' %}?{% now "U" %}">
+<script src="{% static 'home\js\admin.js' %}?{% now "U" %}"></script>
+
+<nav class="admin-nav bg-warning">
+    <ul>
+        <li><span class="open-side-nav" onclick="openNav()">&#9776; </span></li>
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'logout' %}">LogOut</a></li>
+    </ul>
+</nav>
+<div class="side-nav" id="mySidenav">
+    <ul class="side-nav-info ">
+        <li><a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a></li>
+        {% if form %}
+            <li><a class="text-white " href="javascript:void(0)">Add Books</a></li>
+        {% else %}
+            <li><a href="{% url 'addbook' %}">Add Books</a></li>
+        {% endif %}
+
+        {% if books %}
+            <li><a class="text-white " href="javascript:void(0)">View All Books</a></li>
+        {% else %}
+            <li><a href="{% url 'view-books' %}">View All Books</a></li>
+        {% endif %}
+
+        {% if page == "issue-book" %}
+            <li><a class="text-white " href="javascript:void(0);">Issue Book</a></li>
+        {% else %}
+            <li><a href="{% url 'view-requested-book' %}">Issue Book</a></li>
+        {% endif %}
+
+        {% if page == 'view-students' %}
+            <li><a class="text-white " href="javascript:void(0)">View Students</a></li>
+        {% else %}
+            <li><a href="{% url 'view-students' %}">View Students</a></li>
+        {% endif %}
+        
+
+        {% if page == 'issued-books' %}
+            <li><a class="text-white " href="javascript:void(0);">Issued Books</a></li>
+        {% else %}
+            <li><a href="{% url 'issued-book' %}">Issued Books</a></li> 
+        {% endif %}
+        
+    </ul>
+</div>
+<div class="main" id="main">
+
+    {% comment %} --------------------- add-book ------------------------ {% endcomment %}
+    {% if form %}
+    <div class='addbook-wrap' id="addbook-wrap" >
+        <h4>A<span>dd Books</span></h4>
+        <form action="addbook" method='post' enctype="multipart/form-data">
+            {% csrf_token %}
+            <table class="table-addbook">
+                <tr>
+                <td><label>Name</label></td>
+                <td><input type="text" name='name' required></td>
+                </tr>
+
+                <tr>
+                <td><label>Auther</label></td>
+                <td><input type="text" name='auther'  required></td>
+                </tr>
+
+                <tr>
+                <td><label>Language</label></td>
+                <td><input type="text" name='language' ></td>
+                </tr>
+
+                <tr>
+                <td><label>Publisher</label></td>
+                <td><input type="text" name='publisher' ></td>
+                </tr>
+
+                <tr>
+                <td><label>Publish_date</label></td>
+                <td><input type="date" name='publish_date' id="date" ></td>
+                </tr>
+
+                <tr>                       
+                <td><label>Genre</label></td>
+                <td><input type="text" name='genre'></td>
+                </tr>
+
+                <tr>
+                <td><label>Summary</label></td>
+                <td><textarea name="summary" id=""></textarea></td>
+                </tr>
+
+                <tr>
+                <td><label>Image</label></td>
+                <td><input type="file" name='image' accept="image/*"></td>
+                </tr>
+            </table>
+            <button type='submit'>S<span>ubmit</span></button>
+        </form>
+    </div>
+    {% endif %}
+
+    {% comment %} --------------------- add-book ------------------------ {% endcomment %}
+
+    {% comment %} ------------------ View Books --------------------------- {% endcomment %}
+   
+    {% if books %}
+    <div class="view-books-wrap">       
+        <div class="search-form ">
+            <form class="" action='{% url 'view-books' %}'>
+                <div class="inputs ">
+                    <i class="fa fa-search ml-2"></i>
+                    <input type="text" class="form-input " name='q' placeholder="Search Books..." autofocus value="{{q}}">   
+                </div>
+            </form> 
+        </div> 
+        <div class="book-table-wrap">
+            {% if books == 'none' %}
+            <div class="alert">
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                The book is not available...
+            </div> 
+            {% else %} 
+            
+            <table class="table book-table" >
+                <tr>
+                    <th>Name</th>
+                    <th>Auther</th>
+                    <th>Language</th>
+                    <th>Publisher</th>
+                    <th>Publish_date</th>
+                    <th>Genre</th>
+                    <th>Action</th>
+                </tr>
+                {% for book in books %}
+                    <tr id = "{{section}}">
+                        {% if book.image %}
+                        <td ><span class="book-table-span"><img class="img-fluid book-icon"  src="{{book.image.url}}" alt=""> {{book.name}}</span></td>
+                        {% else %}
+                        <td><span class="book-table-span"><img class="img-fluid book-icon" src="{% static 'img/bookplaceholder.png' %}" alt=""> {{book.name}}</span></td>
+                        {% endif %}
+                        <td><span class="book-table-span">{{book.auther}}</span></td>
+                        <td><span class="book-table-span">{{book.language}}</span></td>
+                        <td><span class="book-table-span">{{book.publisher}}</span></td>
+                        <td><span class="book-table-span">{{book.publish_date}}</span></td>
+                        <td><span class="book-table-span">{{book.edition}}</span></td>
+                        <td><span class="book-table-span"><a href="{% url 'delete-book' book.id %}" id="delete">DELETE</a>&nbsp;|&nbsp;<a  href = "{% url 'edit-book' book.id %}">EDIT</a></span></td>
+                    </tr>
+                {% endfor %}
+            </table> 
+
+            {% if editBook %}
+                <div class="edit-book-form-wrap" id="editBookWrap">
+                    <span class="edit-book-close-button" onclick="closeEditBook()">&times;</span>
+                    <h3 class="heading">Edit Book</h3>
+                    <form action='{% url "edit-book" editBook.id %}' method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <table class="">
+                            <tr>
+                            <td><label>Name</label></td>
+                            <td><input type="text" name='name' value="{{editBook.name}}"  required></td>
+                            </tr>
+            
+                            <tr>
+                            <td><label>Auther</label></td>
+                            <td><input type="text" name='auther'  value="{{editBook.auther}}" required></td>
+                            </tr>
+            
+                            <tr>
+                            <td><label>Language</label></td>
+                            <td><input type="text" name='language' value="{{editBook.language}}" ></td>
+                            </tr>
+            
+                            <tr>
+                            <td><label>Publisher</label></td>
+                            <td><input type="text" name='publisher' value="{{editBook.publisher}}"></td>
+                            </tr>
+            
+                            <tr>
+                            <td><label>Publish_date</label></td>
+                            <td><input type="text" id="datepicker" name="publish_date" value="{{date}}" autocomplete="off"></td>
+                            </tr>
+
+                            <tr>                       
+                            <td><label>Genre</label></td>
+                            <td><input type="text" name='genre' value="{{editBook.edition}}"></td>
+                            </tr>
+            
+                            <tr>
+                            <td><label>Summary</label></td>
+                            <td><textarea name="summary" id="" >{{editBook.summary}}</textarea></td>
+                            </tr>
+            
+                            <tr>
+                            {% if editBook.image %}
+                            <td><label>Update Image</label></td>
+                            <td><input type="file" name='image' accept="image/*"></td> 
+                            {% else %}
+                            <td><label>Add Image</label></td>
+                            <td><input type="file" name='image' accept="image/*"></td> 
+                            {% endif %}
+                            </tr>
+                        </table>
+                        <button type='submit'>S<span>ubmit</span></button>
+                    </form>
+                </div>
+                {% endif %}{% comment %} editBook endIF {% endcomment %}
+                
+            {% endif %}
+        </div>
+    </div>    
+    {% endif %}
+    {% comment %} ------------------ View Books --------------------------- {% endcomment %}
+    
+    {% comment %} issue book ----------------------------------------------- {% endcomment %}
+
+    {% if page == "issue-book" %}
+        <div class="issue-book-wrap">
+            {% if reqBooks %}
+            <div class="issue-book-table-wrap">
+                <table>
+                    <tr>
+                        <th>Student</th>
+                        <th>Book</th>
+                        <th>Branch</th>
+                        <th>Request</th>
+                    </tr>
+                    {% for req in reqBooks  %}
+                    <tr>
+                        <td>{{req.user.name.get_full_name}}</td>
+                        <td><div class="issue-book-image"><img src="{{req.Book.image.url}}" alt=""></div>{{req.Book}}</td>
+                        <td>{{req.user.branch}}</td>
+                        <td><a href="{% url 'issue-book' req.id %}">Accept</a></td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            {% else %}
+                <p>No requests found..</p>
+            {% endif %}
+        </div>
+        
+    {% endif %}
+
+    {% comment %} ----------------------------------------------  issue book {% endcomment %}
+
+
+    {% comment %}  issued book ----------------------------------- {% endcomment %}
+    {% if page == 'issued-books' %}
+        <div class="issued-book-wrap">
+            <h3>Borrowed Books</h3>
+            <table class="issued-book-table">
+                <tr>
+                    <th>Student</th>
+                    <th>Book</th>
+                    <th>Issued_Date</th>
+                    <th>Due_Date</th>
+                    <th>Return_Request</th>
+                </tr>
+                {% for book in issuedBooks %}
+                    <tr>
+                        <td>{{book.user.name.get_full_name}}</td>
+                        <td>{{book}}</td>
+                        <td>{{book.borrow_date}}</td>
+                        <td>{{book.return_date}}</td>
+                        {% if book.return_request%}
+                            <td><a href="{% url 'accept-return' book.id %}">Accept</a></td> 
+                        {% else %}
+                            <td>Not Requested</td>
+                        {% endif %}
+                        
+                    </tr>
+                {% endfor %}
+            </table>    
+
+        </div>
+
+    {% endif %}
+    {% comment %}  issued book ----------------------------------- {% endcomment %}
+    
+    {% comment %} view-students ----------------------------------- {% endcomment %}
+
+    {% if page == 'view-students' %}
+    <div class="issued-book-wrap">
+        <h3>Students</h3>
+        <table class="issued-book-table">
+            <tr>
+                <th>Student</th>
+                <th>Age</th>
+                <th>Phone</th>
+                <th>Admission_No</th>
+                <th>Branch</th>
+                <th>Batch</th>
+                <th>Activity</th>
+            </tr>
+            {% for stud in students %}
+                <tr>
+                    <td>{{stud}}</td>
+                    <td>{{stud.age}}</td>
+                    <td>{{stud.phone}}</td>
+                    <td >{{stud.admission_no}}</td>
+                    <td>{{stud.branch}}</td>
+                    <td>{{stud.batch}}</td>
+                    <td><a class="text-success" href="{% url 'view-students' stud.id %}">Show</a></td>
+                </tr>
+            {% endfor %}
+        </table>    
+
+    </div>
+    {% if activity %}
+        <div class="activity-log px-4" id ="activityLog">
+            <span onclick="hideActivity()">&times;</span>
+            <h3 class=" mt-4 text-white"><strong>Activity-Log</strong></h3>
+            <table class="table table-primary table-striped  rounded-bottom">
+                <tr >
+                    <th class="pb-4 pt-3">Book</th>
+                    <th class="pb-4 pt-3">Borrowed_Date</th>
+                    <th class="pb-4 pt-3">Returned_Date</th>
+                </tr>
+                {% for i in activity %}
+                    <tr>
+                        <td>{{i.book}}</td>
+                        <td>{{i.borrow_date}}</td>
+                        <td>{{i.return_date}}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    {% else %}
+        
+    {% endif %}
+
+
+    {% endif %}
+    {% comment %}  --------------------------------------view-students {% endcomment %}
+</div>
+
+{% endblock body %}

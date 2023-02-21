@@ -1,0 +1,78 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block body %}
+
+<link rel="stylesheet" href="{% static 'authentication\css\login_register.css'  %}?{% now "U" %}">
+
+<style>
+    .login-wrap{
+        background-image:url("{% static 'authentication\img\home-bg.jpg' %}");
+    }
+    .register-wrap{
+        background-image:url("{% static 'authentication\img\home-bg.jpg' %}");
+    }
+</style>
+
+
+<div class="page-body">
+
+    {% comment %} User-login------------------------------------------ {% endcomment %}
+    {% if page == 'login' %}
+    <div class="login-wrap">
+        {% if messages %}
+        {% for message in messages %}
+            <p class="message">{{ message }}</p>
+        {% endfor %}
+        {% endif %}
+        <div class="form-wrap">
+            <h2>Login To Continue</h2>
+                <form action="" method = 'POST'>
+                    {% csrf_token %}
+                    <div>
+                        <label>Username </label> <br>
+                        <input type="text" name='username' >
+                    </div>
+                    <div>
+                        <label>Password </label> <br>
+                        <input type="password" name='password' >
+                    </div>
+                    <button type='submit'>Submit</button> 
+                </form>
+                <a href="{% url 'register' %}">dont have an account ?</a>
+        </div>
+    </div>
+    {% endif %}
+    {% comment %} User-login  end------------------------------------- {% endcomment %}
+    
+
+    {% comment %} Register-student ------------------------------------------ {% endcomment %}
+    {% if page == 'register' %}
+    <div class="register-wrap">
+        <div class="register-form-wrap">
+            {% if messages %}
+            {% for message in messages %}
+                <p class="message">{{ message }}</p>
+            {% endfor %}
+            {% endif %}
+            <h2>Register Here</h2>
+            <form action="" method = 'POST'>
+                {% csrf_token %}
+                <label>FirstName </label> <br>
+                <input type="text" name='firstname'  value='{{firstname}}' required><br>
+                <label>LastName </label> <br>
+                <input type="text" name='lastname'  value='{{lastname}}' required><br>
+                <label>Username </label> <br>
+                <input type="text" name='username'  value='{{username}}'><br>
+                <label>Password </label> <br>
+                <input type="password" name='password' value='{{password}}' ><br>
+                <button type='submit'>Submit</button> 
+            </form>
+            <a href="{% url 'login' %}">Already have an account ?</a>
+        </div>
+    </div>    
+    {% endif %}
+    {% comment %} Register-student end--------------------------------------- {% endcomment %}
+
+</div>
+{% endblock  %}

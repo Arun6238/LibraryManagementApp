@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <title>Document</title>
+</head>
+<body>
+    <form action="" id="myform">
+        <label for="">Password</label>
+        <br><br>
+        <input type="text" id="pass" name="password">
+        <br><br>
+        <label for="">Confirm Password</label>
+        <br><br>
+        <input type="text" id="confpass" name="confPassword">
+        <br>
+        <br>
+        <input type="button" value="Submit" onclick="validate()">
+ 
+    </form>
+    <script>
+        function validate(){
+            
+            let password = document.getElementById("pass").value
+            let confPassword = document.getElementById("confpass").value
+            console.log(password,confPassword)
+            if (password == confPassword){
+                document.forms['myform'].submit();
+            }
+        }
+    </script>
+</body>
+
+</html>

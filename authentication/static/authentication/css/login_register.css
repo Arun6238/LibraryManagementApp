@@ -1,0 +1,149 @@
+.page-body{
+
+    height: 100%;
+}
+.message{
+    position: absolute;
+    top:8vh;
+    left: 35vw;
+    right: 35vw;
+    border-radius: 2px;
+    padding:1em 1em;
+    background-color: rgb(255, 200, 0);
+    color: black;
+    font-weight: 600;
+    transition: 300ms ease-in;
+}
+
+/* login form  End ------------------------------------------------- */
+.login-wrap{
+    height: inherit;
+    background-size: 100% 100%;
+    background-position: fixed;
+    background-repeat: no-repeat;
+    padding-top: 20vh;
+ 
+}
+.form-wrap{
+
+    margin-inline: 35vw;
+    padding-inline:3vw;
+    padding-block:2em 4em;
+    background: rgba(0, 0, 0, 0.9);
+}
+.form-wrap h2{
+    font-weight: 600;
+    text-align: center;
+    color: orangered;
+    margin-bottom: 1.2em;
+}
+.form-wrap label{
+    font-weight: bold;
+    color: burlywood;
+}
+.form-wrap div{
+    margin-bottom: .5em;
+}
+.form-wrap input{
+    width: 100%;
+    border: none;
+    border-bottom: orangered solid 3px;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    padding-inline:.8em;
+    padding-top:.3em;
+    padding-bottom:.5em;
+}
+.form-wrap button{
+    width: 100%;
+    margin-top:1.2em;
+    padding-inline:1em;
+    padding-top:.5em;
+    padding-bottom:.6em;
+    border-radius: 2px;
+    border: 0;
+    font-weight: bold;
+    background-color: orangered;
+    color: rgb(255, 255, 255);
+
+}
+.form-wrap a{
+    display: inline-block;
+    margin-top:1.6em;
+    text-transform: capitalize;
+}
+.form-wrap a:hover{
+    text-decoration: none;
+}
+/* login form  End ------------------------------------------------- */
+
+/* register form -------------------------------------------------- */
+
+.register-wrap{
+    height: inherit;
+    background-size: 100% 100%;
+    background-position: fixed;
+    background-repeat: no-repeat;
+    padding-top: 13vh;
+ 
+}
+.register-form-wrap{
+
+    margin-inline: 35vw;
+    padding-inline:3vw;
+    padding-block:2em 4em;
+    background: rgba(0, 0, 0, 0.9);
+}
+.register-form-wrap h2{
+    font-weight: 700;
+    text-align: left;
+    color: gold;
+    margin-bottom: 1.2em;
+}
+.register-form-wrap label{
+    font-weight: bold;
+    color: rgb(159, 184, 108);
+}
+.register-form-wrap input{
+    width: 100%;
+    border: none;
+    border-bottom: gold solid 3px;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    padding-inline:.8em;
+    padding-top:.3em;
+    padding-bottom:.5em;
+}
+.register-form-wrap button{
+    width: 100%;
+    margin-top:1.2em;
+    padding-inline:1em;
+    padding-top:.5em;
+    padding-bottom:.6em;
+    border-radius: 2px;
+    border: 0;
+    font-weight: bold;
+    background-color: gold;
+    color: black;
+
+
+}
+
+.register-form-wrap button:hover{
+    background-color: rgb(255, 228, 72);
+    cursor: pointer;
+}
+
+.register-form-wrap a{
+    display: inline-block;
+    margin-top:1.6em;
+    color: gold;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+.register-form-wrap a:hover{
+    text-decoration: none;
+    color: rgb(255, 221, 137);
+}
+
+/* register form -------------------------------------------------- */
