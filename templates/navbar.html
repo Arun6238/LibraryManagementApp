@@ -1,41 +1,41 @@
 {% load static %}
-<nav class="navbar navbar-expand-lg navbar-light bg py-3  main-nav">
-	<ul class="navbar-nav mr-auto mt-2 mt-lg-0 ">
-		<li class="nav-item active with-logo">
-			<img class="lib-logo" src="{% static 'img/tree.png' %}" alt="" height="45px" width="45px">
-		</li>
-	</ul>
-
-	<div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-
-		<ul class="navbar-nav ml-auto mt-2 mt-lg-0 ">
+<nav>
+	<div  class="nav-section-one">
+		<img class="navbar-logo" src="{% static 'img/tree.png' %}" alt="" >
+	</div>
+	<ul class="nav-section-two">
 		{% if request.user.is_authenticated %}
+			{% comment %} check if the user is Admin {% endcomment %}
 			{% if not request.user.is_superuser %}
-				<li class="nav-item with-logo" onclick="profileDropdown()">
+				<li class="with-logo profile-name" onclick="profileDropdown()">
 					<img class="nav-profile-logo" src="{% static 'img/profile-pic.svg' %}" alt="">
-					<button  class="nav-link text-white nav-button h5"><strong>{{request.user}}</strong></button>
+					<span class="user" >{{request.user}}</span>
 				</li>
+				{% comment %} if user is admin {% endcomment %}
 				{% else %}
-				<li class="nav-item with-logo">
-					<a class="with-logo" href="{% url 'test' %}">
+				<li class="profile-name">
 					<img class="nav-profile-logo" src="{% static 'img/profile-pic.svg' %}" alt="">
-					<button  class="nav-link text-white nav-button h6"><strong>Admin </strong></button>
-					</a>
+					<span>Admin</span>
 				</li>
-				<li class="nav-item with-logo">
-					<a class="nav-link text-white with-logo h6 font-weight-bold" href="{% url 'logout' %}">Logout</a>
+				<li>
+					<a href="{% url 'test' %}">Dashboard</a>
+				</li>
+				<li>
+					<a class="" href="{% url 'logout' %}">Logout</a>
 				</li>
 			{% endif %}
 		{% else %}
-			<li class="nav-item">
-				<a class="nav-link text-white" href="{% url 'login' %}">Login</a>
+			<li>
+				<a class="" href="{% url 'login' %}">Login</a>
 			</li>
-		{% endif %}
-		</ul>         
-	</div>
+		{% endif %}  
+	</ul>
+</nav>    
 
+	{% comment %} Drop Down for user profile {% endcomment %}
 	<div class="sub-menu-wrap" id="profileMenu">
 		<div class="sub-menu">
+			<span class="close-btn" onclick="profileClose()" >&times</span>
 			<div class="user-info">
 				<img  src="{% static 'img/profile.png' %}" alt="">
 				<h3>{{request.user.get_full_name}}</h3>
@@ -64,6 +64,6 @@
 			<hr>
 		</div>
 	</div>
-</nav>
+
 
 {% comment %} nav-bar /\ {% endcomment %}
