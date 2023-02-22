@@ -4,6 +4,7 @@
 
 
 <link rel="stylesheet" href="{% static 'css/home.css' %}?{% now "U" %}">
+<link rel="stylesheet" href="{% static 'css/navbar.css' %}?{% now "U" %}">
 <script src="{% static 'js/home.js' %}"></script>
 
 <style>
@@ -13,76 +14,7 @@
 </style>
 
 {% comment %}  nav-bar {% endcomment %}
-
-<nav class="navbar navbar-expand-lg navbar-light bg py-3  main-nav">
-
-	<ul class="navbar-nav mr-auto mt-2 mt-lg-0 ">
-		<li class="nav-item active with-logo">
-			<img class="lib-logo" src="{% static 'img/tree.png' %}" alt="">
-		</li>
-	</ul>
-
-	<div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-
-		<ul class="navbar-nav ml-auto mt-2 mt-lg-0 ">
-		{% if request.user.is_authenticated %}
-			{% if not request.user.is_superuser %}
-				<li class="nav-item with-logo" onclick="profileDropdown()">
-					<img class="nav-profile-logo" src="{% static 'img/profile-pic.svg' %}" alt="">
-					<button  class="nav-link text-white nav-button h5"><strong>{{request.user}}</strong></button>
-				</li>
-				{% else %}
-				<li class="nav-item with-logo">
-					<a class="with-logo" href="{% url 'test' %}">
-					<img class="nav-profile-logo" src="{% static 'img/profile-pic.svg' %}" alt="">
-					<button  class="nav-link text-white nav-button h6"><strong>Admin </strong></button>
-					</a>
-				</li>
-				<li class="nav-item with-logo">
-					<a class="nav-link text-white with-logo h6 font-weight-bold" href="{% url 'logout' %}">Logout</a>
-				</li>
-			{% endif %}
-		{% else %}
-			<li class="nav-item">
-				<a class="nav-link text-white" href="{% url 'login' %}">Login</a>
-			</li>
-		{% endif %}
-		</ul>         
-	</div>
-
-	<div class="sub-menu-wrap" id="profileMenu">
-		<div class="sub-menu">
-			<div class="user-info">
-				<img  src="{% static 'img/profile.png' %}" alt="">
-				<h3>{{request.user.get_full_name}}</h3>
-			</div>
-			<hr>
-			<a href="{% url 'view-stud-details' %}" class='sub-menu-link' >
-				<img class="image-fluid" src="{% static '/img/view-profile-logo.png' %}" alt="">
-				<p>My Profile</p>
-				<span>></span>
-			</a>
-			<a href="{% url 'add-stud-details' %}" class='sub-menu-link' >
-				<img class="image-fluid" src="{% static '/img/edit-profile-logo2.png' %}" alt="">
-				<p>Edit Profile</p>
-				<span>></span>
-			</a>
-			<a href="{% url 'passw-update' %}" class='sub-menu-link' >
-				<img class="image-fluid" src="{% static '/img/6117000.png' %}" alt="">
-				<p>Change Password</p>
-				<span>></span>
-			</a>
-			<a href="{% url 'logout' %}" class='sub-menu-link' >
-				<img class="image-fluid" src="{% static '/img/log-out-logo2.jpg' %}" alt="">
-				<p>Logout</p>
-				<span>></span>
-			</a>
-			<hr>
-		</div>
-	</div>
-</nav>
-
-{% comment %} nav-bar /\ {% endcomment %}
+{% include 'navbar.html' %}
 
 <div class='home-container'>
 	<div class='search-form-container'>
