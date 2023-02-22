@@ -1,61 +1,58 @@
 {% extends 'main.html' %}
 {% load static %}
+
+{% block head %}	
+	<link rel="stylesheet" href="{% static 'css/home.css' %}?{% now "U" %}">
+	<link rel="stylesheet" href="{% static 'css/navbar.css' %}?{% now "U" %}">
+	<script src="{% static 'js/home.js' %}?{% now "U" %}"></script>
+	<style>
+		.home-container{
+			background-image:url("{% static 'img/home-bg.jpg' %}");
+		}
+	</style>
+{% endblock head %}
+
 {% block body %}
+	{% comment %}  nav-bar {% endcomment %}
+	{% include 'navbar.html' %}
 
-
-<link rel="stylesheet" href="{% static 'css/home.css' %}?{% now "U" %}">
-<link rel="stylesheet" href="{% static 'css/navbar.css' %}?{% now "U" %}">
-<script src="{% static 'js/home.js' %}"></script>
-
-<style>
-	.home-container{
-		background-image:url("{% static 'img/home-bg.jpg' %}");
-	}
-</style>
-
-{% comment %}  nav-bar {% endcomment %}
-{% include 'navbar.html' %}
-
-<div class='home-container'>
-	<div class='search-form-container'>
-		<form action='{% url 'home' %}' class="search ">
-			<div class="inputs ">
-				<i class="fa fa-search"></i>
-				<input type="text" class="form-input" name='q' placeholder="Search Books..." value="{{q}}">   
-			</div>
-		</form>              
-	</div>
-	<div class='grid-container'>
-		{% for book in books %}
-		<div class='grid-content hov '>
-		<div>
-			{% if book.image %}
-			<img class="img-height " src="{{book.image.url}}" alt=""  >
-			{% else %}
-			<img class=" img-fluid img-height" src="{% static 'img/bookplaceholder.png' %}" alt="" >
-			{% endif %}
-			<h6 class="mt-3 text-capitalize"><strong>{{book}}</strong></h6>
-			<div class='text-capitalize b'>{{book.language}}, {{book.auther}}</div>
-			{% if request.user.is_superuser %}
+	<div class='home-container'>
+		<div class='search-form-container'>
+			<form action='{% url 'home' %}' class="search ">
+				<div class="inputs ">
+					<i class="fa fa-search"></i>
+					<input type="text" class="form-input" name='q' placeholder="Search Books..." value="{{q}}">   
+				</div>
+			</form>              
+		</div>
+		<div class='grid-container'>
+			{% for book in books %}
+			<div class='grid-content hov '>
+				{% if book.image %}
+				<img class="book-image" src="{{book.image.url}}" alt=""  >
 				{% else %}
-					{% if reqBook %}
-						{% if book.id in reqBook %}
-							<div class="request"><a href="javascript:void(0)" class="text-danger">Request</a></div>
+				<img class="book-image" src="{% static 'img/bookplaceholder.png' %}" alt="" >
+				{% endif %}
+				<h6 class="book-title"><strong>{{book}}</strong></h6>
+				<p class='book-details'>{{book.language}}, {{book.auther}}</p>
+				{% if request.user.is_superuser %}
+					{% else %}
+						{% if reqBook %}
+							{% if book.id in reqBook %}
+								<div class="request"><a id="disabled-btn" href="javascript:void(0)">Request</a></div>
+								{% else %}
+									<div class="request"><a href="{% url 'request-book' book.id %}">Request</a></div>
+							{% endif %}
 							{% else %}
-								<div class="request"><a href="{% url 'request-book' book.id %}">Request</a></div>
+							<div class="request"><a href="{% url 'request-book' book.id %}">Request</a></div>
 						{% endif %}
-						{% else %}
-						<div class="request"><a href="{% url 'request-book' book.id %}">Request</a></div>
-					{% endif %}
-			{% endif %}
-			
+				{% endif %}
+			</div>
+			{% endfor %}    
 		</div>
-		</div>
-		{% endfor %}    
-	</div>
-	<div>
+		<div>
 
-</div> {% comment %} home-container {% endcomment %}
+	</div> {% comment %} home-container {% endcomment %}
 
 {% endblock body %}
 
