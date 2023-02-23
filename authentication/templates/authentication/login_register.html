@@ -2,16 +2,8 @@
 {% load static %}
 
 {% block head %}
-    <link rel="stylesheet" href="{% static 'authentication\css\login_register.css'  %}?{% now "U" %}">
-    <script src="{% static 'authentication\js\login_register.js' %}??{% now "U" %}"></script>
-    <style>
-        .login-wrap{
-            background-image:url("{% static 'authentication\img\home-bg.jpg' %}");
-        }
-        .register-wrap{
-            background-image:url("{% static 'authentication\img\home-bg.jpg' %}");
-        }
-    </style>
+    <link rel="stylesheet" href="{% static 'authentication\css\login_register.css'  %}">
+    <script src="{% static 'authentication\js\login_register.js' %}"></script>
 {% endblock head %}
 
 {% block body %}
