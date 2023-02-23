@@ -1,19 +1,20 @@
 {% extends 'main.html' %}
 {% load static %}
 
+{% block head %}
+    <link rel="stylesheet" href="{% static 'authentication\css\login_register.css'  %}?{% now "U" %}">
+    <script src="{% static 'authentication\js\login_register.js' %}??{% now "U" %}"></script>
+    <style>
+        .login-wrap{
+            background-image:url("{% static 'authentication\img\home-bg.jpg' %}");
+        }
+        .register-wrap{
+            background-image:url("{% static 'authentication\img\home-bg.jpg' %}");
+        }
+    </style>
+{% endblock head %}
+
 {% block body %}
-
-<link rel="stylesheet" href="{% static 'authentication\css\login_register.css'  %}?{% now "U" %}">
-
-<style>
-    .login-wrap{
-        background-image:url("{% static 'authentication\img\home-bg.jpg' %}");
-    }
-    .register-wrap{
-        background-image:url("{% static 'authentication\img\home-bg.jpg' %}");
-    }
-</style>
-
 
 <div class="page-body">
 
@@ -24,22 +25,26 @@
         {% for message in messages %}
             <p class="message">{{ message }}</p>
         {% endfor %}
+        {% else %}
+            <p class="message hide">msg</p>
         {% endif %}
         <div class="form-wrap">
             <h2>Login To Continue</h2>
-                <form action="" method = 'POST'>
+                <form action="" method = 'POST' autocomplete="off">
                     {% csrf_token %}
                     <div>
                         <label>Username </label> <br>
-                        <input type="text" name='username' >
+                        <input class="login-inp" type="text" name='username' required>
                     </div>
                     <div>
                         <label>Password </label> <br>
-                        <input type="password" name='password' >
+                        <input id="password" class="login-inp" type="password" name='password'  required >
                     </div>
+                    <input class="show-password-checkbox" onclick="showPassword()" type="checkbox" name="" id="">
+                    <span class="show-password">Show Password</span>
                     <button type='submit'>Submit</button> 
                 </form>
-                <a href="{% url 'register' %}">dont have an account ?</a>
+                <span class="register-link-span">Dont have an account ?</span><a href="{% url 'register' %}">Create one</a>
         </div>
     </div>
     {% endif %}
@@ -48,29 +53,33 @@
 
     {% comment %} Register-student ------------------------------------------ {% endcomment %}
     {% if page == 'register' %}
-    <div class="register-wrap">
-        <div class="register-form-wrap">
+        <div class="register-wrap">
             {% if messages %}
             {% for message in messages %}
                 <p class="message">{{ message }}</p>
             {% endfor %}
+            {% else %}
+                <p class="message hide">msg</p>
             {% endif %}
-            <h2>Register Here</h2>
-            <form action="" method = 'POST'>
-                {% csrf_token %}
-                <label>FirstName </label> <br>
-                <input type="text" name='firstname'  value='{{firstname}}' required><br>
-                <label>LastName </label> <br>
-                <input type="text" name='lastname'  value='{{lastname}}' required><br>
-                <label>Username </label> <br>
-                <input type="text" name='username'  value='{{username}}'><br>
-                <label>Password </label> <br>
-                <input type="password" name='password' value='{{password}}' ><br>
-                <button type='submit'>Submit</button> 
-            </form>
-            <a href="{% url 'login' %}">Already have an account ?</a>
-        </div>
-    </div>    
+            <div class="register-form-wrap">
+                <h2>Register Yor Account Here</h2>
+                <form action="" method = 'POST' onsubmit="return registervalidation()">
+                    {% csrf_token %}
+                    <label>FirstName </label> <br>
+                    <input type="text" name='firstname'  value='{{firstname}}' required><br>
+                    <label>LastName </label> <br>
+                    <input type="text" name='lastname'  value='{{lastname}}' required><br>
+                    <label>Username </label> <br>
+                    <input id="regUsername" type="text" name='username'  value='{{username}}' required><br>
+                    <label>Password </label> <br>
+                    <input id="regPass" type="password" name='password' value='{{password}}' required><br>
+                    <label>Confirm Password </label> <br>
+                    <input id="regConfPass" type="password" name='confPass' value='{{password}}' required><br>
+                    <button type='submit'>Submit</button> 
+                </form>
+                <span class="register-link-span">Already have an account ?</span><a href="{% url 'login' %}">Login here.</a>
+            </div>
+        </div>    
     {% endif %}
     {% comment %} Register-student end--------------------------------------- {% endcomment %}
 

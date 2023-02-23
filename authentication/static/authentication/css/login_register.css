@@ -3,36 +3,42 @@
     height: 100%;
 }
 .message{
-    position: absolute;
-    top:8vh;
-    left: 35vw;
-    right: 35vw;
     border-radius: 2px;
     padding:1em 1em;
-    background-color: rgb(255, 200, 0);
+    background-color: rgb(255, 131, 48);
     color: black;
     font-weight: 600;
     transition: 300ms ease-in;
+    width: 650px;
 }
 
 /* login form  End ------------------------------------------------- */
+.hide{
+    color: transparent;
+    background: transparent;
+}
 .login-wrap{
+
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
     height: inherit;
     background-size: 100% 100%;
     background-position: fixed;
     background-repeat: no-repeat;
-    padding-top: 20vh;
- 
+    padding-top: 70px;
 }
 .form-wrap{
-
-    margin-inline: 35vw;
-    padding-inline:3vw;
+    width: 650px;
+    height: fit-content;
+    padding-inline:1.5em;
     padding-block:2em 4em;
     background: rgba(0, 0, 0, 0.9);
+    transition: 300ms ease-in;
 }
 .form-wrap h2{
-    font-weight: 600;
+    font-weight: 700;
     text-align: center;
     color: orangered;
     margin-bottom: 1.2em;
@@ -44,7 +50,7 @@
 .form-wrap div{
     margin-bottom: .5em;
 }
-.form-wrap input{
+.login-inp{
     width: 100%;
     border: none;
     border-bottom: orangered solid 3px;
@@ -53,6 +59,13 @@
     padding-inline:.8em;
     padding-top:.3em;
     padding-bottom:.5em;
+}
+.show-password-checkbox{
+    cursor: pointer;
+}
+.show-password{
+    color:white;
+    font-weight: 600;
 }
 .form-wrap button{
     width: 100%;
@@ -67,37 +80,53 @@
     color: rgb(255, 255, 255);
 
 }
-.form-wrap a{
+
+.register-link-span{
+    color: rgb(255, 208, 138);
+    margin-right:.5em ;
+}
+
+.form-wrap a,
+.register-form-wrap a{
     display: inline-block;
     margin-top:1.6em;
-    text-transform: capitalize;
+    color: rgb(56, 176, 64);
 }
-.form-wrap a:hover{
+.form-wrap a:hover,
+.register-form-wrap a:hover{
     text-decoration: none;
+    color: rgb(0, 255, 17);
 }
+
 /* login form  End ------------------------------------------------- */
 
 /* register form -------------------------------------------------- */
 
 .register-wrap{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
     height: inherit;
     background-size: 100% 100%;
     background-position: fixed;
     background-repeat: no-repeat;
-    padding-top: 13vh;
+    padding-top: 40px;
  
 }
 .register-form-wrap{
 
-    margin-inline: 35vw;
+    width: 650px;
     padding-inline:3vw;
-    padding-block:2em 4em;
-    background: rgba(0, 0, 0, 0.9);
+    padding-block:2em;
+    background: rgba(0, 0, 0, 0.795);
+
+    transition: all 300ms ease-in;
 }
 .register-form-wrap h2{
     font-weight: 700;
     text-align: left;
-    color: gold;
+    color: rgb(202, 175, 24);
     margin-bottom: 1.2em;
 }
 .register-form-wrap label{
@@ -107,12 +136,16 @@
 .register-form-wrap input{
     width: 100%;
     border: none;
-    border-bottom: gold solid 3px;
+    border-bottom: rgb(202, 175, 24) solid 3px;
+    background-color: bisque;
     border-top-left-radius: 2px;
     border-top-right-radius: 2px;
     padding-inline:.8em;
     padding-top:.3em;
     padding-bottom:.5em;
+}
+.conf-pass{
+    background-color: rgb(255, 157, 157);
 }
 .register-form-wrap button{
     width: 100%;
@@ -123,27 +156,35 @@
     border-radius: 2px;
     border: 0;
     font-weight: bold;
-    background-color: gold;
+    background-color: rgb(202, 175, 24);
     color: black;
 
 
 }
 
 .register-form-wrap button:hover{
-    background-color: rgb(255, 228, 72);
+    background-color: rgb(234, 208, 64);
     cursor: pointer;
 }
 
-.register-form-wrap a{
-    display: inline-block;
-    margin-top:1.6em;
-    color: gold;
-    font-weight: 600;
-    text-transform: capitalize;
-}
-.register-form-wrap a:hover{
-    text-decoration: none;
-    color: rgb(255, 221, 137);
-}
 
-/* register form -------------------------------------------------- */
+/* register form  end-------------------------------------------------- */
+
+@media only screen and (max-width : 768px) {
+    /* login form */
+    .message{
+        width: 420px;
+    }
+    .form-wrap{
+        width: 400px;
+        height: fit-content;
+    }
+    /* register form */
+    .register-form-wrap{
+        width: 420px;
+        font-size:.9em;
+    }
+    .register-form-wrap h2{
+        font-size: 30px;
+    }
+}

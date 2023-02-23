@@ -15,6 +15,7 @@ def loginUser(request):
     if request.user.is_authenticated:
         return redirect(home)
     page = 'login'
+    context={'page':page}
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -22,6 +23,7 @@ def loginUser(request):
             user = User.objects.get(username=username)
         except:
             messages.error(request,'User does not exist')
+            return render(request,'authentication/login_register.html',context)
         user = authenticate(request,username=username,password=password)
         
         if user is not None and user.is_superuser == 1:
@@ -32,7 +34,6 @@ def loginUser(request):
             return redirect(home)
         else:
             messages.error(request,'User name and password dosent match..')
-    context={'page':page}
     return render(request,'authentication/login_register.html',context)
 
 
